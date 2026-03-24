@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cancer Screening Tool | Butaro Hospital</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 0.9rem; color: var(--secondary);">Logged in as: <strong>{{ name }}</strong></span>
+                <a href="{{ url_for('logout') }}" style="font-size: 0.8rem; color: var(--danger); text-decoration: none; font-weight: bold;">Logout</a>
+            </div>
+            <h1>Butaro Hospital</h1>
+            <p>Clinical Decision Assistance Tool for Early Cancer Screening</p>
+        </header>
+
+        <section class="screening-form">
+            <form id="screeningForm">
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required min="18" max="120">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="0">Female</option>
+                        <option value="1">Male</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="history">Family History of Cancer:</label>
+                    <select id="history" name="history" required>
+                        <option value="">Select Option</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="smoking">Smoking Status:</label>
+                    <select id="smoking" name="smoking" required>
+                        <option value="">Select Option</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="symptoms">Persistent Symptoms:</label>
+                    <select id="symptoms" name="symptoms" required>
+                        <option value="0">None</option>
+                        <option value="1">Persistent Pain</option>
+                        <option value="2">New Lump/Swelling</option>
+                        <option value="3">Unusual Bleeding</option>
+                        <option value="4">Multiple Symptoms</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="submitBtn">Get Prediction</button>
+            </form>
+        </section>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Analyzing patient data...</p>
+        </div>
+
+        <section id="resultCard" class="hidden">
+            <div class="result-header">
+                <h2>Prediction Result</h2>
+                <div id="riskBadge" class="badge"></div>
+            </div>
+            <div class="result-body">
+                <p><strong>Confidence:</strong> <span id="probabilityText"></span>%</p>
+                <p><strong>Clinical Explanation:</strong></p>
+                <p id="explanationText" class="explanation"></p>
+            </div>
+            <button onclick="resetForm()">New Screening</button>
+        </section>
+
+        <section id="errorMsg" class="hidden error">
+            <p>An error occurred. Please try again.</p>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
